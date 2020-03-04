@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Калькулятор</string>
+
+    <string name="string_textView"></string>
+    <string name="string_7">7</string>
+    <string name="string_8">8</string>
+    <string name="string_9">9</string>
+    <string name="string_division">÷</string>
+    <string name="string_4">4</string>
+    <string name="string_5">5</string>
+    <string name="string_6">6</string>
+    <string name="string_multiplication">×</string>
+    <string name="string_1">1</string>
+    <string name="string_2">2</string>
+    <string name="string_3">3</string>
+    <string name="string_difference">—</string>
+    <string name="string_point">.</string>
+    <string name="string_0">0</string>
+    <string name="string_result">=</string>
+    <string name="string_sum">+</string>
+    <string name="example"></string>
+    <string name="string_openSkob">(</string>
+    <string name="string_closeSkob">)</string>
+    <string name="string_persent">%</string>
+    <string name="string_delete">C</string>
+    <string name="string_tan">tan</string>
+    <string name="string_cos">cos</string>
+    <string name="string_sin">sin</string>
+    <string name="string_factorial">!</string>
+    <string name="string_exponentE">e</string>
+    <string name="string_lg">lg</string>
+    <string name="string_ln">ln</string>
+    <string name="string_pi">π</string>
+    <string name="string_power">^</string>
+    <string name="string_sqrt">√</string>
+
+    <string name="string_about">О программе</string>
+</resources>
