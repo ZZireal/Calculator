@@ -3,26 +3,24 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp">
-    <ImageView
-        android:id="@+id/image"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
 
     <LinearLayout
+        android:id="@+id/recycler_item_linearlayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="70sp">
         <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"  />
-
+            android:id="@+id/resultRecycle"
+            android:textSize="25dp"
+            android:textColor="@color/colorDarkGreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"/>
         <TextView
-            android:id="@+id/company"
-            android:layout_width="wrap_content"
+            android:id="@+id/exampleRecycle"
+            android:textSize="19dp"
+            android:textColor="#6e6e6e"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"  />
     </LinearLayout>
 </LinearLayout>

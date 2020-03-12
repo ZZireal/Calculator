@@ -3,7 +3,6 @@ package by.bsuir.podgornaya.calculator;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,21 +17,38 @@ import androidx.appcompat.widget.Toolbar;
 import com.udojava.evalex.Expression;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MyLog";
 
-    TextView resultField;
+    String[] exampleNow = {""};
+
+    EditText resultField;
     EditText exampleField;
 
     Button openBracket, closeBracket, percent, delete, number_1, number_2, number_3, number_4, number_5, number_6,
             number_7, number_8, number_9, number_0, division, multiplication, sum, difference, point, result,
             tan, sin, cos, ln, lg, factorial, pi, exponentE, power, sqrt;
 
-
     View.OnClickListener buttonWork;
     View.OnLongClickListener buttonWorkLong;
+
+    ArrayList<String> resultList = new ArrayList<>();
+    ArrayList<String> exampleList = new ArrayList<>();
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("key", exampleNow[0]);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        exampleNow[0] = savedInstanceState.getString("key", exampleNow[0]);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -52,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_history:
                 Intent intentHistory = new Intent(this, HistoryActivity.class);
-                startActivity(intentHistory);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("resultKey", resultList);
+                bundle.putStringArrayList("exampleKey", exampleList);
+                intentHistory.putExtras(bundle);
+                startActivity(intentHistory, bundle);
                 break;
         }
         return true;
@@ -85,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         resultField = findViewById(R.id.resultField);
         exampleField = findViewById(R.id.exampleField);
 
-        exampleField.setMovementMethod(new ScrollingMovementMethod());
-
         division = findViewById(R.id.division);
         multiplication = findViewById(R.id.multiplication);
         sum = findViewById(R.id.sum);
@@ -108,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
         power = findViewById(R.id.power);
         sqrt = findViewById(R.id.sqrt);
         pi = findViewById(R.id.pi);
-
-        final String[] exampleNow = {""};
 
         Log.d(TAG, "Связали!");
 
@@ -247,10 +261,13 @@ public class MainActivity extends AppCompatActivity {
                                 BigDecimal calc;
                                 calc = new Expression(exampleNow[0]).eval();
                                 resultField.setText(calc.toString());
-                                //добавление в RecyclerView
+                                //для RecycleView
+                                resultList.add(resultField.getText().toString());
+                                exampleList.add(exampleNow[0]);
                                 break;
                             } catch (Exception ex) {
                                 resultField.setText("Неверное выражение");
+                                System.out.println(ex.getMessage());
                             }
                 }
             }
