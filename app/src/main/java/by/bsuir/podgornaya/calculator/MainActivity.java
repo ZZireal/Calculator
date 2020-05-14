@@ -1,76 +1,81 @@
 package by.bsuir.podgornaya.calculator;
 
-import android.content.Intent;
+import android.content.Intent; //подключаю, т.к. передаю данные в другую активити (из основной странички калькулятора в страничку с историей)
 import android.content.res.Configuration;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.os.Bundle; //подключаю, т.к. сохраняю свои данные в объекте типа Bundle
+import android.util.Log; //пыталась проверить на каком моменте ломается код
+import android.view.Menu; //для меню
+import android.view.MenuInflater; //для того, чтобы "надуть" меню пунктами
+import android.view.MenuItem; // для того, чтобы написать обработчик нажатий на пункты меню
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.udojava.evalex.Expression;
-
-import java.math.BigDecimal;
+import com.udojava.evalex.Expression; //для математических расчетов
+import java.math.BigDecimal; //для математических расчетов
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MyLog";
+    private static final String TAG = "MyLog"; //попытка отследить где ломается приложение
 
-    String[] exampleNow = {""};
+    //объявление переменных
+    String[] exampleNow = {""}; //String[], потому что у меня что-то не работало и предложило автоматически заменить String на String[]
 
-    EditText resultField;
-    EditText exampleField;
+    EditText resultField; //EditText почему - тоже не помню, давно писала приложение
+    EditText exampleField; //возможно, для того, чтобы сделать свайп, когда строка не влазит в границы экрана
 
     Button openBracket, closeBracket, percent, delete, number_1, number_2, number_3, number_4, number_5, number_6,
             number_7, number_8, number_9, number_0, division, multiplication, sum, difference, point, result,
             tan, sin, cos, ln, lg, factorial, pi, exponentE, power, sqrt;
 
-    View.OnClickListener buttonWork;
-    View.OnLongClickListener buttonWorkLong;
+    View.OnClickListener buttonWork; //краткий клик для всех кнопок
+    View.OnLongClickListener buttonWorkLong; //долгий клик для кнопок результата и очищения
 
-    ArrayList<String> resultList = new ArrayList<>();
-    ArrayList<String> exampleList = new ArrayList<>();
+    ArrayList<String> resultList = new ArrayList<>(); //для последующей передачи данных в историю
+    ArrayList<String> exampleList = new ArrayList<>(); //для последующей передачи данных в историю
 
+    //сохраняет состояние активити (для перехода к другой ориентации экрана)
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("key", exampleNow[0]);
+        outState.putString("keyForDataAfterOrient", exampleNow[0]);
         super.onSaveInstanceState(outState);
     }
 
+    //восстаналивает состояние активити (после перехода к другой ориентации экрана)
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        exampleNow[0] = savedInstanceState.getString("key", exampleNow[0]);
+        exampleNow[0] = savedInstanceState.getString("keyForDataAfterOrient", exampleNow[0]);
     }
 
+    //создание меню опций
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
+        menuInflater.inflate(R.menu.main_menu, menu); //"надуваем" меню данными из разметки
         return true;
     }
 
+    //обработчик нажатий на пункты меню опций
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_about:
+                //создадим намерение intent и укажем из какого какое активити открыть (явный вызов intent)
                 Intent intentAbout = new Intent(this, AboutActivity.class);
+                //запуск intent-a
                 startActivity(intentAbout);
                 break;
             case R.id.menu_history:
                 Intent intentHistory = new Intent(this, HistoryActivity.class);
-                Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle(); //создать объект типа Bundle для того, чтобы запихнуть сюда данные для передачи на другой активити
                 bundle.putStringArrayList("resultKey", resultList);
                 bundle.putStringArrayList("exampleKey", exampleList);
-                intentHistory.putExtras(bundle);
-                startActivity(intentHistory, bundle);
+                intentHistory.putExtras(bundle); //передаем в intent данные, сохраненные в Bundle
+                startActivity(intentHistory, bundle); //запускаем другую активити и передаем туда данные в Bundle
                 break;
         }
         return true;
@@ -78,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); //задать макет в кач-ве пользовательского интерфейса операции, передается в него идентификатор ресурса макета
 
         Log.d(TAG, "Связываем переменные с кнопочками");
 
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         //Устанавливаем его на экран
         setSupportActionBar(toolbar);
 
+        //сейчас будем привязывать к переменным соответствующие id, чтобы работать с объектами разметки через java-код
         number_1 = findViewById(R.id.number_1);
         number_2 = findViewById(R.id.number_2);
         number_3 = findViewById(R.id.number_3);
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Связали!");
 
+        //обработчик коротких нажатий на кнопки разметки
         buttonWork = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //обработчик долгих нажатий на кнопки разметки
         buttonWorkLong = new View.OnLongClickListener() {
             public boolean onLongClick(View v) {
                 switch (v.getId()) {
@@ -308,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "Присваиваем кнопочкам обработчики");
 
+        //присвоить соответствущим кнопкам обработчики нажатий
         number_1.setOnClickListener(buttonWork);
         number_2.setOnClickListener(buttonWork);
         number_3.setOnClickListener(buttonWork);

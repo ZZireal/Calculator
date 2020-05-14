@@ -15,8 +15,6 @@ public class HistoryActivity extends AppCompatActivity {
     MyAdapter myAdapter;
     List<ResultExample> resultExampleList = new ArrayList<>();
 
-
-
     public List<ResultExample> getResultExampleList() {
         return resultExampleList;
     }
@@ -53,8 +51,6 @@ public class HistoryActivity extends AppCompatActivity {
         myAdapter = new MyAdapter(this, resultExampleList);
         // устанавливаем для RecyclerView адаптер
         recyclerView.setAdapter(myAdapter);
-
-
     }
 
     public void addInResultExampleList (ArrayList<String> result, ArrayList<String> example) {

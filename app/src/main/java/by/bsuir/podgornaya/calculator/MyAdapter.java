@@ -59,8 +59,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             //linearLayout.setOnClickListener(this);
         }
 
-
-
        /* @Override
         public void onClick(View v) {
             Intent intentHistory = new Intent(context, MainActivity.class);
