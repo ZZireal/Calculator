@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_about:
                 //создадим намерение intent и укажем из какого какое активити открыть (явный вызов intent)
                 Intent intentAbout = new Intent(this, AboutActivity.class);
-                //запуск intent-a
+                //запуск intent-a (т.е. по факту - запуск активити)
                 startActivity(intentAbout);
                 break;
             case R.id.menu_history:
@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); //задать макет в кач-ве пользовательского интерфейса операции, передается в него идентификатор ресурса макета
+        setContentView(R.layout.activity_main); //задать макет в кач-ве пользовательского интерфейса операции, передается в него идентификатор ресурса макета (написано в инетике)
+        //ну а простой формулировкой - вывести разметку на экран и работать с данной разметкой в последующем коде...
 
         Log.d(TAG, "Связываем переменные с кнопочками");
 

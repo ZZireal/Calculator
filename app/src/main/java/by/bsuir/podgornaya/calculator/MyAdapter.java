@@ -24,18 +24,21 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.resultExampleList = resultExampleList;
     }
 
+    //конструктор
     MyAdapter(Context context, List<ResultExample> resultExampleList) {
         this.resultExampleList = resultExampleList;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
     }
 
+    //создает новые View и ViewHolder
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.recycler_item, parent, false);
         return new ViewHolder(view);
     }
 
+    //связывает вьюшки со списком элементов которые надо отобразить, т.е. заполняет
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, int position) {
         ResultExample resultExample = resultExampleList.get(position);
@@ -43,11 +46,13 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.exampleView.setText(resultExample.getExample());
     }
 
+    //возращает размер
     @Override
     public int getItemCount() {
         return resultExampleList.size();
     }
 
+    //вроде как отвечает за то, чтобы подгружались и отображались только нужные вьюшки
     public class ViewHolder extends RecyclerView.ViewHolder {
         final TextView resultView, exampleView;
         //LinearLayout linearLayout;
